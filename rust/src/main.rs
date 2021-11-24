@@ -35,6 +35,11 @@ impl Account {
 /// @todo Perhaps this should be a fixed length &string instead
 type Sha3Hash = String;
 
+/// Type Alias for ECDSA Signatures to make it explicitly clear that the string is a signature and not just any random string
+///
+/// @todo Perhaps this should be a fixed length &string instead
+type Signature = String;
+
 #[derive(Debug)]
 struct Transaction {
     hash: Sha3Hash,
@@ -48,7 +53,7 @@ struct Transaction {
     amount: u64,
 
     /// Perhaps this should be a fixed length &string instead
-    signature: String,
+    signature: Signature,
 }
 
 impl std::fmt::Display for Transaction {
