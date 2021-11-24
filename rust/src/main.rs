@@ -29,17 +29,23 @@ impl Account {
     }
 }
 
+/// Type Alias for SHA3 hashes to make it explicitly clear that the string is a hash and not just any random string
+///
+/// @todo Change the type to a struct, where it holds the data for the hash and can be serialized with a to_string method
+/// @todo Perhaps this should be a fixed length &string instead
+type Sha3Hash = String;
+
 #[derive(Debug)]
 struct Transaction {
-    /// Perhaps this should be a fixed length &string instead
-    hash: String,
+    hash: Sha3Hash,
 
     from: Account,
     to: Account,
 
-    /// why usize??
-    /// Should not allow floating points and negative numbers
-    amount: usize,
+    /// Using a fixed size primitive instead of usize to ensure that it is platform independent.
+    /// u64 is a reasonable default for most platforms and big enough for practically all transactions.
+    /// Amount can only be positive integers, no floating points or negative numbers allowed
+    amount: u64,
 
     /// Perhaps this should be a fixed length &string instead
     signature: String,
@@ -56,11 +62,8 @@ impl std::fmt::Display for Transaction {
 
 #[derive(Debug)]
 struct Block {
-    /// Perhaps this should be a fixed length &string instead
-    hash: String,
-
-    /// Perhaps this should be a fixed length &string instead
-    parent_hash: String,
+    hash: Sha3Hash,
+    parent_hash: Sha3Hash,
 }
 
 impl std::fmt::Display for Block {
